@@ -16,21 +16,17 @@
 ;;  Author:        wangjild <wangjild@gmail.com>
 ;;  Blog:          http://www.liloke.com/
 ;;  Github:        https://github.com/wangjild/sicp
-;;  File:          1.8_cuberoot.lisp
+;;  File:          1.10_Ackermann.lisp
 ;;  Lauguage:      common lisp
-;;  Date:          14-04-02 05:18:14
+;;  Date:          14-04-02 08:43:46
 ;;  Descripton:    
 
-(defun improve (guess x)
-  (/ (+ (* 2 guess) (/ x (* guess guess)))) 3)
+(defun A (x y)
+ (cond ((= y 0) 0)
+       ((= x 0) (* 2 y))
+       ((= y 1) 2)
+       (t (A (- x 1) (A x (- y 1))))))
 
-(defun good-enough? (guess x) 
-  (< (abs (- (* guess guess) x)) 0.00001))
-  
-(defun cube-root (guess x)
-  (if (good-enough? guess x)
-    guess
-    (cube-root (improve guess x) x)
-   ))
-
-(format t "~A~%" (cube-root 1 9)''ss)
+(format t "~A~%" (A 1 10)''ss)
+(format t "~A~%" (A 2 4)''ss)
+(format t "~A~%" (A 3 3)''ss)

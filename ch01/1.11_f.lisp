@@ -16,21 +16,25 @@
 ;;  Author:        wangjild <wangjild@gmail.com>
 ;;  Blog:          http://www.liloke.com/
 ;;  Github:        https://github.com/wangjild/sicp
-;;  File:          1.8_cuberoot.lisp
+;;  File:          1.11_f.lisp
 ;;  Lauguage:      common lisp
-;;  Date:          14-04-02 05:18:14
+;;  Date:          14-04-02 09:27:45
 ;;  Descripton:    
 
-(defun improve (guess x)
-  (/ (+ (* 2 guess) (/ x (* guess guess)))) 3)
+(defun f (n) 
+ ( if (< n 3)
+    n
+    (+ (f (- n 1)) (* 2 (f (- n 2))) (* 3 (f (- n 3))))))
 
-(defun good-enough? (guess x) 
-  (< (abs (- (* guess guess) x)) 0.00001))
+(format t "~A~%" (f 3)''ss)
+(format t "~A~%" (f 5)''ss)
+
+(defun f-i (n)
+ (f-iter 2 1 0 n))
+
+(defun f-iter (n-1 n-2 n-3 n)
+ (if (= n 0) n-3
+  (f-iter (+ n-1 (* 2 n-2) (* 3 n-3)) n-1 n-2 (- n 1))))
+(format t "~A~%" (f-i 3)''ss)
+(format t "~A~%" (f-i 5)''ss)
   
-(defun cube-root (guess x)
-  (if (good-enough? guess x)
-    guess
-    (cube-root (improve guess x) x)
-   ))
-
-(format t "~A~%" (cube-root 1 9)''ss)
