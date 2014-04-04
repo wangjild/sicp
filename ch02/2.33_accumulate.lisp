@@ -16,18 +16,24 @@
 ;;  Author:        wangjild <wangjild@gmail.com>
 ;;  Blog:          http://www.liloke.com/
 ;;  Github:        https://github.com/wangjild/sicp
-;;  File:          2.18_reverse.lisp
+;;  File:          2.33_accumulate.lisp
 ;;  Lauguage:      common lisp
-;;  Date:          14-04-04 06:03:45
+;;  Date:          14-04-04 13:33:24
 ;;  Descripton:    
 
-(defun reverse-iter (x result)
- (if (null x)
-  result
-  (reverse-iter (cdr x)
-             (cons (car x) result))))
-(defun reverse-i (x)
- (reverse-iter x '()))
-(format t "~A~%" (reverse-i (list 1 2 3 4)))
-(format t "~A~%" (reverse-i (list (list 1 2) (list 3 4))))
-(format t "~A~%" (reverse-i (list (list 1 2) (list 3 4 (list 5 6 7)))))
+(defun accumulate (op initial seque)
+ (if (null seque)
+  initial
+  (funcall op (car seque) (accumulate op initial (cdr seque)))))
+
+(defun append-self (list1 list2)
+  (accumulate #'cons list2 list1))
+(defun length-self (seque)
+ (accumulate (lambda (x y) (+ 1 y))
+  0 seque))
+
+(trace accumulate)
+
+(append-self (list 3 2 1) (list 4 5 6))
+
+(length-self (list 1 2 3 4))

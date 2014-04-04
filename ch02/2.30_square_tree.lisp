@@ -16,18 +16,15 @@
 ;;  Author:        wangjild <wangjild@gmail.com>
 ;;  Blog:          http://www.liloke.com/
 ;;  Github:        https://github.com/wangjild/sicp
-;;  File:          2.18_reverse.lisp
+;;  File:          2.30_square_tree.lisp
 ;;  Lauguage:      common lisp
-;;  Date:          14-04-04 06:03:45
+;;  Date:          14-04-04 11:59:41
 ;;  Descripton:    
 
-(defun reverse-iter (x result)
- (if (null x)
-  result
-  (reverse-iter (cdr x)
-             (cons (car x) result))))
-(defun reverse-i (x)
- (reverse-iter x '()))
-(format t "~A~%" (reverse-i (list 1 2 3 4)))
-(format t "~A~%" (reverse-i (list (list 1 2) (list 3 4))))
-(format t "~A~%" (reverse-i (list (list 1 2) (list 3 4 (list 5 6 7)))))
+(defun square-tree (tree)
+ (cond 
+  ((null tree) nil)
+  ((not (consp tree)) (* tree tree))
+  (t (cons (square-tree (car tree)) (square-tree (cdr tree))))))
+(trace square-tree)
+(square-tree (list 1 (list 2 (list 3 4) 5) (list 6 7)))

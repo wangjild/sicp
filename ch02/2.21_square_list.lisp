@@ -27,5 +27,14 @@
   (cons 
    (expt (car items) 2) 
    (square-list (cdr items)))))
+(defun map-i (proc items)
+ (if (null items)
+  nil
+  (cons (funcall proc (car items))
+        (map-i proc (cdr items)))))
+
+(defun square-list-map (items)
+ (map 'list (lambda(x) (* x x)) items))
 
 (format t "~A~%" (square-list (list 1 2 3 4 5)))
+(format t "~A~%" (square-list-map (list 1 2 3 4 5)))

@@ -16,18 +16,18 @@
 ;;  Author:        wangjild <wangjild@gmail.com>
 ;;  Blog:          http://www.liloke.com/
 ;;  Github:        https://github.com/wangjild/sicp
-;;  File:          2.18_reverse.lisp
+;;  File:          2.28_finger.lisp
 ;;  Lauguage:      common lisp
-;;  Date:          14-04-04 06:03:45
+;;  Date:          14-04-04 08:59:00
 ;;  Descripton:    
 
-(defun reverse-iter (x result)
- (if (null x)
-  result
-  (reverse-iter (cdr x)
-             (cons (car x) result))))
-(defun reverse-i (x)
- (reverse-iter x '()))
-(format t "~A~%" (reverse-i (list 1 2 3 4)))
-(format t "~A~%" (reverse-i (list (list 1 2) (list 3 4))))
-(format t "~A~%" (reverse-i (list (list 1 2) (list 3 4 (list 5 6 7)))))
+(defun finger (x)
+ (cond
+  ((null x) nil)
+  ((not (listp x)) (list x))
+  (t (append (finger (car x)) (finger (cdr x))))))
+
+(trace finger)
+;(finger (list (list 1 2) (list 3 4)))
+;(finger (list 1 (list 2 (list 3 4))))
+(finger (list (list (list 2 1) 3) 4))
