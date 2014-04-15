@@ -25,3 +25,9 @@
   (if (null seque)
     initial
     (funcall op (car seque) (accumulate op initial (cdr seque)))))
+
+(defun accumulate-n (op init seqs)
+  (if (null (car seqs))
+    nil 
+    (cons (accumulate op init (map 'list #'car seqs))
+          (accumulate-n op init (map 'list #'cdr seqs)))))
