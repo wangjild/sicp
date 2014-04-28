@@ -31,3 +31,27 @@
     nil 
     (cons (accumulate op init (map 'list #'car seqs))
           (accumulate-n op init (map 'list #'cdr seqs)))))
+
+(defun enumerate-interval (low high)
+ (if (> low high)
+  nil
+  (cons low (enumerate-interval (+ low 1) high))))
+
+
+(defun flatmap (proc seq)
+ (accumulate #'append nil (map 'list proc seq)))
+
+
+(defun primep (x)
+  (let ((sqrt-x (sqrt x)))
+    (do ((i 2 (1+ i)))
+        ((> i sqrt-x) t)
+      (when (eq (mod x i) 0)
+    (return nil)))))
+
+(defun filter (predicate seq) 
+ (cond ((null seq) nil) 
+  ((funcall predicate (car seq))
+   (cons (car seq)
+    (filter predicate (cdr seq))))
+  (t (filter predicate (cdr seq)))))
