@@ -16,35 +16,24 @@
 ;;  Author:        wangjild <wangjild@gmail.com>
 ;;  Blog:          http://www.liloke.com/
 ;;  Github:        https://github.com/wangjild/sicp
-;;  File:          1.10_Ackermann.lisp
+;;  File:          1.16_expt.lisp
 ;;  Lauguage:      common lisp
-;;  Date:          14-04-02 08:43:46
+;;  Date:          14-04-02 10:27:18
 ;;  Descripton:
 
-(defun A (x y)
- (cond ((= y 0) 0)
-       ((= x 0) (* 2 y))
-       ((= y 1) 2)
-       (t (A (- x 1) (A x (- y 1))))))
+(defun double (n)
+    (+ n n))
 
-(format t "~A~%" (A 1 10)''ss)
-(format t "~A~%" (A 2 4)''ss)
-(format t "~A~%" (A 3 3)''ss)
+(defun halve (n)
+    (/ n 2))
 
-;; (A 0 n) => 2*n
-(format t "~A~%" (A 0 1)''ss)
-(format t "~A~%" (A 0 2)''ss)
-(format t "~A~%" (A 0 3)''ss)
-(format t "~A~%" (A 0 4)''ss)
+(defun fast-multi (b n a)
+ (expt-iter b n 1))
 
-;; (A 1 n) => 2^n
-(format t "~A~%" (A 1 1)''ss)
-(format t "~A~%" (A 1 2)''ss)
-(format t "~A~%" (A 1 3)''ss)
-(format t "~A~%" (A 1 4)''ss)
+(defun multi-iter (b n a)
+ (cond ((= n 0)
+        a)
+  ((evenp n) (multi-iter (* b b) (/ n 2) a))
+  ((oddp n)  (multi-iter b (- n 1) (* b a)))))
 
-;; (A 2 n) => 2^(2^(2...))
-(format t "~A~%" (A 2 1)''ss)
-(format t "~A~%" (A 2 2)''ss)
-(format t "~A~%" (A 2 3)''ss)
-(format t "~A~%" (A 2 4)''ss)
+(format t "~A~%" (fast-multi 3 3)''ss)

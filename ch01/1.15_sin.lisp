@@ -19,7 +19,7 @@
 ;;  File:          1.15_sin.lisp
 ;;  Lauguage:      common lisp
 ;;  Date:          14-04-02 10:03:15
-;;  Descripton:    
+;;  Descripton:
 
 (defun cube (x) (* x x x))
 
@@ -30,5 +30,6 @@
     angle
     (p (sine (/ angle 3.0)))))
 
-(trace p)
-(sin 12.15)
+(trace sine)
+
+(format t "~A~%" (sine 12.15)''ss)
