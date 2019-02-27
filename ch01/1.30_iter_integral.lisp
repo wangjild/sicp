@@ -16,26 +16,38 @@
 ;;  Author:        wangjild <wangjild@gmail.com>
 ;;  Blog:          http://www.liloke.com/
 ;;  Github:        https://github.com/wangjild/sicp
-;;  File:          2.6_church.lisp
+;;  File:          expl_definite_simpson.lisp
 ;;  Lauguage:      common lisp
-;;  Date:          14-04-03 21:17:15
+;;  Date:          14-04-02 11:27:45
 ;;  Descripton:
 
-(defun zero() (lambda (f) (lambda (x) x)))
 
-(defun add-1 (n)
- (lambda (f)
-  (lambda (x)
-   (funcall f (funcall (funcall n f) x)))))
+(defun sum (term a next b)
+ (defun iter (a result) (
+   (if (a > b) result
+       (iter (next a) (+ result (term a)))
+   ))
+ （iter a 0)
+ )
 
-;;(print (zero))
-(print (add-1 (zero)))
+(defun simpson (func a b n)
+ (defun h () (/ (- b a) n))
+ (defun y (k) (funcall func (+ a (* k (h)))))
+ (defun factor (k)
+  (cond
+   ((or (= k 0) (= k n)) 1)
+   ((oddp k) 4)
+   (t 2)))
+ (defun term (k)
+  (* (factor k) (y k)))
+ (defun next (k) (+ k 1))
 
-(defun +
-    (lambda (m)
-        (lambda (n)
-            (lambda (f)
-                (lambda (x)
-                    (funcall m f (funcall n f x)))))))
+ (* (sum #'term 0 #'next n)
+  (/ (h) 3)))
 
-(print (+ 2 1))
+(defun cube (x) (* x x x))
+
+(format t "~A~%" (simpson #'cube 0 1 10)''ss)
+(format t "~A~%" (simpson #'cube 0 1 100)''ss)
+(format t "~A~%" (simpson #'cube 0 1 1000)''ss)
+(format t "~A~%" (simpson #'cube 0 1 2000)''ss)
